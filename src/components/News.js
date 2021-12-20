@@ -7,17 +7,43 @@ export class News extends Component {
     this.state = {
       articles: [],
       loading: false,
+      page: 1,
     };
   }
 
   async componentDidMount() {
     let url =
-      "https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f";
+      "https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=1";
     let data = await fetch(url);
     let parsedData = await data.json();
     // console.log(parsedData);
     this.setState({ articles: parsedData.articles });
   }
+
+  handelPrevoiousClick = async () => {
+    console.log("Previous");
+    let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=${
+      this.state.page - 1
+    }`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      page: this.state.page - 1,
+      articles: parsedData.articles,
+    });
+  };
+  handelNextClick = async () => {
+    console.log("Next");
+    let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=${
+      this.state.page + 1
+    }`;
+    let data = await fetch(url);
+    let parsedData = await data.json();
+    this.setState({
+      page: this.state.page + 1,
+      articles: parsedData.articles,
+    });
+  };
 
   render() {
     return (
@@ -39,6 +65,23 @@ export class News extends Component {
                 </div>
               );
             })}
+          </div>
+          <div className="container d-flex justify-content-between mx-3">
+            <button
+              disabled={this.state.page <= 1}
+              type="button"
+              className="btn btn-dark"
+              onClick={this.handelPrevoiousClick}
+            >
+              &larr; Previous
+            </button>
+            <button
+              type="button"
+              className="btn btn-dark"
+              onClick={this.handelNextClick}
+            >
+              Next &rarr;
+            </button>
           </div>
         </div>
       </div>
