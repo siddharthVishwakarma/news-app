@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import NewsItem from "./NewsItem";
+import Spinner from "./Spinner";
 
 export class News extends Component {
   constructor() {
@@ -12,36 +13,40 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    let url =
-      "https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=1";
+    let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=1&pageSize=${this.props.pageSize}`;
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
     // console.log(parsedData);
-    this.setState({ articles: parsedData.articles });
+    this.setState({ articles: parsedData.articles, loading: false });
   }
 
   handelPrevoiousClick = async () => {
     console.log("Previous");
     let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=${
       this.state.page - 1
-    }`;
+    }&pageSize=${this.props.pageSize}`;
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
       page: this.state.page - 1,
       articles: parsedData.articles,
+      loading: false,
     });
   };
   handelNextClick = async () => {
     console.log("Next");
     let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=${
       this.state.page + 1
-    }`;
+    }&pageSize=${this.props.pageSize}`;
+    this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
     this.setState({
       page: this.state.page + 1,
       articles: parsedData.articles,
+      loading: false,
     });
   };
 
@@ -49,7 +54,9 @@ export class News extends Component {
     return (
       <div>
         <div className="container my-3">
-          <h1>This is a news component</h1>
+          <h1 className="text-center">News Hub - Top technology News</h1>
+
+          {this.state.loading && <Spinner />}
           <div className="row">
             {this.state.articles.map((ele) => {
               return (
@@ -76,6 +83,7 @@ export class News extends Component {
               &larr; Previous
             </button>
             <button
+              disabled={this.state.page >= 10}
               type="button"
               className="btn btn-dark"
               onClick={this.handelNextClick}
