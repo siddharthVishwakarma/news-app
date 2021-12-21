@@ -13,7 +13,7 @@ export class News extends Component {
   }
 
   async componentDidMount() {
-    let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=1&pageSize=${this.props.pageSize}`;
+    let url = `https://newsapi.org/v2/everything?q=${this.props.category}&apiKey=be30d809c74544209e01fe977372609f&page=1&pageSize=${this.props.pageSize}`;
     this.setState({ loading: true });
     let data = await fetch(url);
     let parsedData = await data.json();
@@ -23,7 +23,9 @@ export class News extends Component {
 
   handelPrevoiousClick = async () => {
     console.log("Previous");
-    let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=${
+    let url = `https://newsapi.org/v2/everything?q=${
+      this.props.category
+    }&apiKey=be30d809c74544209e01fe977372609f&page=${
       this.state.page - 1
     }&pageSize=${this.props.pageSize}`;
     this.setState({ loading: true });
@@ -37,7 +39,9 @@ export class News extends Component {
   };
   handelNextClick = async () => {
     console.log("Next");
-    let url = `https://newsapi.org/v2/everything?q=technology&apiKey=be30d809c74544209e01fe977372609f&page=${
+    let url = `https://newsapi.org/v2/everything?q=${
+      this.props.category
+    }&apiKey=be30d809c74544209e01fe977372609f&page=${
       this.state.page + 1
     }&pageSize=${this.props.pageSize}`;
     this.setState({ loading: true });
@@ -54,7 +58,7 @@ export class News extends Component {
     return (
       <div>
         <div className="container my-3">
-          <h1 className="text-center">News Hub - Top technology News</h1>
+          <h1 className="text-center my-3">News Hub - Todays Top News</h1>
 
           {this.state.loading && <Spinner />}
           <div className="row">
