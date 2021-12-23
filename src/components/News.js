@@ -74,6 +74,7 @@ export class News extends Component {
                     newsUrl={ele.url}
                     date={ele.publishedAt}
                     author={ele.author}
+                    source={ele.source.name}
                   />
                 </div>
               );

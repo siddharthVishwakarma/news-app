@@ -2,10 +2,17 @@ import React, { Component } from "react";
 
 export class NewsItem extends Component {
   render() {
-    let { title, description, imageUrl, newsUrl, author, date } = this.props;
+    let { title, description, imageUrl, newsUrl, author, date, source } =
+      this.props;
     return (
       <div>
         <div className="card">
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            style={{ zIndex: "1", left: "90%" }}
+          >
+            {source}
+          </span>
           <img
             src={
               !imageUrl
