@@ -1,18 +1,16 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-// import PropTypes from "prop-types";
 
 export class Navbar extends Component {
-  //   static propTypes = {};
-
   render() {
     return (
       <div>
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
           <div className="container-fluid">
-            <a className="navbar-brand" href="/">
-              Navbar
-            </a>
+            <Link className="navbar-brand" aria-current="page" to="/">
+              News-Hub
+            </Link>
+
             <button
               className="navbar-toggler"
               type="button"

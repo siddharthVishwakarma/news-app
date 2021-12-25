@@ -3,13 +3,18 @@ import NewsItem from "./NewsItem";
 import Spinner from "./Spinner";
 
 export class News extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       articles: [],
       loading: false,
       page: 1,
     };
+    document.title = `${this.capitalizeFirstLetter(this.props.category)} News`;
+  }
+
+  capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
   async componentDidMount() {
@@ -58,7 +63,10 @@ export class News extends Component {
     return (
       <div>
         <div className="container my-3">
-          <h1 className="text-center my-3">News Hub - Todays Top News</h1>
+          <h1 className="text-center my-3">
+            News Hub - Top {this.capitalizeFirstLetter(this.props.category)}{" "}
+            News
+          </h1>
 
           {this.state.loading && <Spinner />}
           <div className="row">
